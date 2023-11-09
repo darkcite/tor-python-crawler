@@ -24,5 +24,14 @@ COPY app .
 # Expose port for debugging purposes
 EXPOSE 5678
 
-# Command to run the Python script
-CMD service tor start && sleep 15 && python ./script.py
+# Copy the entrypoint script into the container
+COPY entrypoint.sh /entrypoint.sh
+
+# Give execution rights on the entrypoint script
+RUN chmod +x /entrypoint.sh
+
+# Set the entrypoint script to be executed
+ENTRYPOINT ["/entrypoint.sh"]
+
+# Default command to run when starting the container
+CMD ["python", "./script.py"]
